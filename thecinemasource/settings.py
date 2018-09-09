@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'interviews',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "static"),
+#    '/var/www/static/',
+#    '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/uploads/',
+    '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/test/',
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
