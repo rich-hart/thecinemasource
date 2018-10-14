@@ -21,13 +21,8 @@ from django.conf.urls.static import static
 from rest_framework import routers
 
 from .views import posts 
-from interviews.views import InterviewViewSet
-
-router = routers.DefaultRouter()
-router.register(r'interviews', InterviewViewSet) 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/<int:number>/',posts),
-    path('', include(router.urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
