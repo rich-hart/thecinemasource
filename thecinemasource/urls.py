@@ -25,6 +25,7 @@ router = routers.DefaultRouter()
 router.register(r'posts', PostViewSet)
 router.register(r'photographs', PhotographSerializer)
 urlpatterns = [
-#    path('admin/', admin.site.urls),
-    path(r'', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path(r'api-auth/', include('rest_framework.urls')),
+    path(r'api/', include(router.urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

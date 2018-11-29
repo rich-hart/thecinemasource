@@ -7,14 +7,14 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = (
             'id',
-            'deprecated_id',
+#            'deprecated_id',
+            'category',
+            'name',
+            'title',
             'author',
             'date',
-            'content',
-            'title',
-            'category',
             'excerpt',
-            'name',
+            'content',
         )
 
 class PhotographSerializer(serializers.ModelSerializer):

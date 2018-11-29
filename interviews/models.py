@@ -11,7 +11,7 @@ class Post(models.Model):
             return [(e.value, e.name) for _, e in enumerate(cls)]
 
 #| ID                    | bigint(20) unsigned | NO   | PRI | NULL                | auto_increment |
-    deprecated_id = models.IntegerField()
+    deprecated_id = models.IntegerField(null=True)
 #| post_author           | bigint(20) unsigned | NO   | MUL | 0                   |                |
     author = models.CharField(max_length = 255)
 #| post_date             | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
@@ -28,9 +28,8 @@ class Post(models.Model):
         default=Category.Interview.value,
     )
 #| post_excerpt          | text                | NO   |     | NULL                |                |
-    excerpt = models.CharField(
-        max_length=255,
-    )
+    excerpt = models.TextField()
+
 
 #| post_status           | varchar(20)         | NO   |     | publish             |                |
 #| comment_status        | varchar(20)         | NO   |     | open                |                |
