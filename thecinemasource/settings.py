@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'thecinemasource.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'thecinemasource',
-        'USER': 'rich',
+        'NAME': os.environ.get('THECINEMASOURCE_DATABASE_NAME'),
+        'USER': os.environ.get('THECINEMASOURCE_DATABASE_USER'),
         'PASSWORD': os.environ.get('THECINEMASOURCE_DATABASE_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': os.environ.get('THECINEMASOURCE_DATABASE_HOST'),
+        'PORT': os.environ.get('THECINEMASOURCE_DATABASE_PORT'),
     },
 #    'recovery': {
 #        'ENGINE': 'django.db.backends.mysql',
