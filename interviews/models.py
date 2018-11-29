@@ -1,6 +1,8 @@
 from django.db import models
 from enum import Enum
 
+from thecinemasource.storage_backends import MediaStorage
+
 class Post(models.Model):
     class Category(Enum):
         Interview = "IN"
@@ -54,7 +56,5 @@ class Post(models.Model):
         ordering = ['-date']
 
 class Photograph(models.Model):
-    filename = models.CharField(max_length = 255)
-#    post_id= models.IntegerField()
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
-
+    upload = models.FileField(storage=MediaStorage()) 

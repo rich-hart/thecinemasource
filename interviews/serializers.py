@@ -21,6 +21,6 @@ class PhotographSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photograph
         fields = (
-            'filename',
+            'upload',
             'post',
         )

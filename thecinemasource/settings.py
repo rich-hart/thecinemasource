@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wm(jcr%d%pg!wgporm3bwts2__6%en647v%=mo2x5@i-pyq535'
 
+SECRET_KEY = os.environ.get('THECINEMASOURCE_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'thecinemasource',
         'USER': 'rich',
-        'PASSWORD': 'password',
+        'PASSWORD': os.environ.get('THECINEMASOURCE_DATABASE_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '5432',
     },
@@ -139,13 +139,37 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 # https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html#working-with-static-assets-only
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
+#STATICFILES_DIRS = [
 #    os.path.join(BASE_DIR, "static"),
 #    '/var/www/static/',
 #    '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/uploads/',
-    '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/test/',
+#    '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/test/',
+#]
+
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+AWS_ACCESS_KEY_ID = os.environ.get('THECINEMASOURCE_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('THECINEMASOURCE_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('THECINEMASOURCE_AWS_STORAGE_BUCKET_NAME')
+
+AWS_REGION = 'us-east-2'
+AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_STATIC_LOCATION = 'static'
+STATICFILES_STORAGE = 'thecinemasource.storage_backends.StaticStorage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
+
+AWS_MEDIA_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'thecinemasource.storage_backends.MediaStorage'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
+
