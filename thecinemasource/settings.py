@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
+
     'interviews',
 ]
 
@@ -82,16 +84,22 @@ WSGI_APPLICATION = 'thecinemasource.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'recovery': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'thecinemasource',
         'USER': 'rich',
         'PASSWORD': 'password',
-        'PORT': 3306,
-    }
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+#    'recovery': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'thecinemasource',
+#        'USER': 'rich',
+#        'PASSWORD': 'password',
+#        'PORT': 3306,
+#        'TEST_NAME': 'test_thecinemasource',
+#    },
+    
 }
 
 

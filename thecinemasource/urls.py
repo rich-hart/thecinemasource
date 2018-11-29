@@ -19,10 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from rest_framework import routers
+from interviews.views import PostViewSet, PhotographSerializer
 
-from .views import posts 
-
+router = routers.DefaultRouter()
+router.register(r'posts', PostViewSet)
+router.register(r'photographs', PhotographSerializer)
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('posts/<int:number>/',posts),
+#    path('admin/', admin.site.urls),
+    path(r'', include(router.urls)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
