@@ -15,7 +15,7 @@ class Post(models.Model):
 #| post_author           | bigint(20) unsigned | NO   | MUL | 0                   |                |
     author = models.CharField(max_length = 255)
 #| post_date             | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
-    date = models.DateTimeField()
+    date = models.DateField()
 #| post_date_gmt         | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
 #| post_content          | longtext            | NO   | MUL | NULL                |                |
     content = models.TextField()
