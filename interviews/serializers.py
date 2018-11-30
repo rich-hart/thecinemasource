@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
             'id',
 #            'deprecated_id',
             'category',
-            'name',
+#            'name',
             'title',
             'author',
             'date',
