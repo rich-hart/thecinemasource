@@ -36,7 +36,7 @@ class Post(models.Model):
 #| ping_status           | varchar(20)         | NO   |     | open                |                |
 #| post_password         | varchar(20)         | NO   |     |                     |                |
 #| post_name             | varchar(200)        | NO   | MUL |                     |                |
-    name = models.CharField(max_length = 255)
+#    name = models.CharField(max_length = 255)
 #| to_ping               | text                | NO   |     | NULL                |                |
 #| pinged                | text                | NO   |     | NULL                |                |
 #| post_modified         | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
@@ -50,7 +50,7 @@ class Post(models.Model):
 #| comment_count         | bigint(20)          | NO   |     | 0                   |                |
 
     def __str__(self):
-        return "{0} {1}".format(self.name, self.date)
+        return self.title
     class Meta:
         ordering = ['-date']
 
