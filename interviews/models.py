@@ -13,14 +13,14 @@ class Post(models.Model):
 #| ID                    | bigint(20) unsigned | NO   | PRI | NULL                | auto_increment |
     deprecated_id = models.IntegerField(null=True)
 #| post_author           | bigint(20) unsigned | NO   | MUL | 0                   |                |
-    author = models.CharField(max_length = 255)
+    author = models.TextField()
 #| post_date             | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
     date = models.DateField()
 #| post_date_gmt         | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
 #| post_content          | longtext            | NO   | MUL | NULL                |                |
     content = models.TextField()
 #| post_title            | text                | NO   | MUL | NULL                |                |
-    title = models.CharField(max_length = 255)
+    title = models.TextField()
 #| post_category         | int(4)              | NO   |     | 0                   |                |
     category = models.CharField(
         max_length=2,
