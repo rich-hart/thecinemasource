@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -15,4 +16,5 @@ class PhotographSerializer(viewsets.ModelViewSet):
     queryset = Photograph.objects.all()
     serializer_class = PhotographSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('post',)
