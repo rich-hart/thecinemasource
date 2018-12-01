@@ -6,3 +6,4 @@ boto3
 django-storages
 gunicorn
 django-heroku
+django-filter
