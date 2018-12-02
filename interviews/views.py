@@ -9,7 +9,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('name', 'title')
+    search_fields = ('title',)
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class PhotographSerializer(viewsets.ModelViewSet):
