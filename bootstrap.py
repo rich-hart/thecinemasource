@@ -1,11 +1,13 @@
 #./manage.py sqlsequencereset
+#import ipdb; ipdb.set_trace()
+import re
 import os
 from os import listdir
 from os.path import isfile, join
 import psycopg2
 import mysql.connector
 TEST=False
-OLD_WEBSITE_IMAGE_UPLOADS = '/home/rich/Projects/dan_website_rewrite/backup/public_html/wp-content/uploads/'
+OLD_WEBSITE_IMAGE_UPLOADS = '/home/rich/Projects/dan_website_rewrite/thecinemasource/media'
 
 DATABASES = {
     'default': {
@@ -47,6 +49,9 @@ psql_db_conn = psycopg2.connect(
 )
 
 count = 0
+
+interview_errors = []
+
 for row in mysql_db_result:
     if TEST:
         count+=1
@@ -55,16 +60,20 @@ for row in mysql_db_result:
     try:
         psql_db_cursor = psql_db_conn.cursor()
     
-        title_tokens = row['post_title'].split(' Interview for ')
+        title_tokens = row['post_title'].lower().split(' interview for ')
     
         name = title_tokens[0]
         name = name.lower().replace(' ','_')
     
         film = title_tokens[1]
         film = film.lower().replace(' ','_')
-    
-        image_files = [ i for i in media_files if name in i.lower() and film in i.lower()]
-    
+#        for image_file in media_files:
+#            image_tokens = re.split('-|_|\.', image_file.lower())
+#            for token in title_tokens:
+
+#        image_files = [ i for i in media_files if name in i.lower() and film in i.lower()]
+        file_prefix = name + '-' + film
+        image_files = [ i for i in media_files if file_prefix in i.lower()]
         row['post_date'] = row['post_date'].date() 
         psql_db_cursor.execute("INSERT INTO interviews_post (deprecated_id, author, date, content, title, category, excerpt) "
                                "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id",(
@@ -77,17 +86,24 @@ for row in mysql_db_result:
                                        row['post_excerpt'],
                                    )
                                )
-        psql_db_conn.commit()
+#        psql_db_conn.commit()
         row_id = psql_db_cursor.fetchone()[0]
         if image_files:
             for image_file in image_files:
                 psql_db_cursor.execute("INSERT INTO interviews_photograph (upload, post_id) VALUES (%s, %s)",
                     (image_file,row_id)
                 )
-                psql_db_conn.commit()
-    except psycopg2.DataError:
-        import ipdb; ipdb.set_trace()
-        pass
+
+        psql_db_conn.commit()
+    except psycopg2.DataError as e:
+        interview_errors.append(row['post_title'])
+        psql_db_conn.commit()
+        psql_db_cursor = psql_db_conn.cursor()
+#        import ipdb; ipdb.set_trace()
+#        pass
+
 psql_db_conn.close()
 
-
+print("ERRORS ON INTERVIEWS:")
+for error in interview_errors:
+    print(error)
