@@ -56,4 +56,10 @@ class Post(models.Model):
 
 class Photograph(models.Model):
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
-    upload = models.FileField(storage=MediaStorage()) 
+    upload = models.FileField(storage=MediaStorage())
+
+class Favorite(models.Model):
+    post = models.ForeignKey(Post, on_delete = models.CASCADE)
+    created =  models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ['-created']

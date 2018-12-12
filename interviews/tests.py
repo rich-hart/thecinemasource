@@ -42,3 +42,32 @@ class TestIntervies(TestCase):
         self.assertIn('linux_logo.jpeg',response.data.get('upload'))
         self.assertIn(settings.MEDIA_URL,response.data.get('upload'))
 
+    def test_post_with_favorite(self):
+        import ipdb; ipdb.set_trace()
+        client = APIClient()
+        response = client.get('/posts/')
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.data.get('count'),0)
+
+        data = { 
+            "deprecated_id": 0,
+            "author": "Daniel Deevy",
+            "date": "2018-11-26",
+            "content": "Post content",
+            "title": "Interview Name",
+            "category": "IN",
+            "excerpt": "Interview with person",
+            "name": "Interview Post Name"
+        }
+        response = client.post('/posts/',data=data,format='json')
+        self.assertEqual(response.status_code, 201)
+
+        response = client.get('/posts/')
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.data.get('count'),1)
+
+        expected_id = 1
+        returned_id = response.data.get('results').pop().get('id')
+
+        self.assertEqual(expected_id,returned_id)
+        

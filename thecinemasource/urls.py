@@ -19,11 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from rest_framework import routers
-from interviews.views import PostViewSet, PhotographSerializer
+from interviews.views import PostViewSet, PhotographViewSet, FavoriteViewSet
 
 router = routers.DefaultRouter()
 router.register(r'posts', PostViewSet)
-router.register(r'photographs', PhotographSerializer)
+router.register(r'photographs', PhotographViewSet)
+router.register(r'favorites', FavoriteViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'api-auth/', include('rest_framework.urls')),

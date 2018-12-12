@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Post, Photograph
+from .models import Post, Photograph, Favorite
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +25,13 @@ class PhotographSerializer(serializers.ModelSerializer):
             'upload',
             'post',
         )
+
+class FavoriteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = (
+            'id',
+            'post',
+            'created',
+        )
+        read_only_fields = ('id', 'created')
