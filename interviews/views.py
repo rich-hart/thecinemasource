@@ -8,9 +8,10 @@ from .serializers import PostSerializer, PhotographSerializer, FavoriteSerialize
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
     search_fields = ('title',)
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_fields = ('index',)
 
 class PhotographViewSet(viewsets.ModelViewSet):
     queryset = Photograph.objects.all()

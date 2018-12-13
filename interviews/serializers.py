@@ -15,6 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
             'date',
             'excerpt',
             'content',
+            'index',
         )
 
 class PhotographSerializer(serializers.ModelSerializer):

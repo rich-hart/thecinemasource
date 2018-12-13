@@ -3,12 +3,43 @@ from enum import Enum
 
 from thecinemasource.storage_backends import MediaStorage
 
+class Choice(Enum):
+    @classmethod
+    def get_choices(cls):
+        return [(e.value, e.name) for _, e in enumerate(cls)]
+
+
 class Post(models.Model):
-    class Category(Enum):
+    class Category(Choice):
         Interview = "IN"
-        @classmethod
-        def get_choices(cls):
-            return [(e.value, e.name) for _, e in enumerate(cls)]
+
+    class Index(Choice):
+        A = "A"
+        B = "B"
+        C = "C"
+        D = "D"
+        E = "E"
+        F = "F"
+        G = "G"
+        H = "H"
+        I = "I"
+        J = "J"
+        K = "K"
+        L = "L"
+        M = "M"
+        N = "N"
+        O = "O"
+        P = "P"
+        Q = "Q"
+        R = "R"
+        S = "S"
+        T = "T"
+        U = "U"
+        V = "V"
+        W = "W"
+        X = "X"
+        Y = "Y"
+        Z = "Z"
 
 #| ID                    | bigint(20) unsigned | NO   | PRI | NULL                | auto_increment |
     deprecated_id = models.IntegerField(null=True)
@@ -30,6 +61,11 @@ class Post(models.Model):
 #| post_excerpt          | text                | NO   |     | NULL                |                |
     excerpt = models.TextField()
 
+    index = models.CharField(
+        max_length=1,
+        choices=Index.get_choices(),
+        null = True,
+    )
 
 #| post_status           | varchar(20)         | NO   |     | publish             |                |
 #| comment_status        | varchar(20)         | NO   |     | open                |                |
