@@ -14,6 +14,7 @@ class Post(models.Model):
         Interview = "IN"
 
     class Index(Choice):
+        NONE = ""
         A = "A"
         B = "B"
         C = "C"

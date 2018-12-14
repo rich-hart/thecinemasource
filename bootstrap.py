@@ -64,7 +64,15 @@ for row in mysql_db_result:
     
         name = title_tokens[0]
         name = name.lower().replace(' ','_')
-    
+
+        if len(name.split("_"))==2:
+            last_name = name.split("_")[1]
+            index = last_name[0]
+        else:
+            last_name = "*"
+            index = ""
+            interview_errors.append(name)
+
         film = title_tokens[1]
         film = film.lower().replace(' ','_')
 #        for image_file in media_files:
@@ -77,8 +85,8 @@ for row in mysql_db_result:
         pattern = "(\w+)-(\w+)-(\d+)\.jpg"
         image_files = [f for f in image_files if re.match(pattern,f)]
         row['post_date'] = row['post_date'].date() 
-        psql_db_cursor.execute("INSERT INTO interviews_post (deprecated_id, author, date, content, title, category, excerpt) "
-                               "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id",(
+        psql_db_cursor.execute("INSERT INTO interviews_post (deprecated_id, author, date, content, title, category, excerpt, last_name, index) "
+                               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id",(
                                        row['ID'],
                                        row['post_author'],
                                        row['post_date'],
@@ -86,6 +94,8 @@ for row in mysql_db_result:
                                        row['post_title'],
                                        "IN",
                                        row['post_excerpt'],
+                                       last_name,
+                                       index
                                    )
                                )
 #        psql_db_conn.commit()
