@@ -11,11 +11,13 @@ class PostSerializer(serializers.ModelSerializer):
             'category',
 #            'name',
             'title',
+            'last_name',
             'author',
             'date',
             'excerpt',
             'content',
             'index',
+
         )
 
 class PhotographSerializer(serializers.ModelSerializer):
