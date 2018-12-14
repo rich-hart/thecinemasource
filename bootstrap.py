@@ -67,7 +67,7 @@ for row in mysql_db_result:
 
         if len(name.split("_"))==2:
             last_name = name.split("_")[1]
-            index = last_name[0]
+            index = last_name.upper()[0]
         else:
             last_name = "*"
             index = ""
