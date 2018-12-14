@@ -1,12 +1,12 @@
 #./manage.py sqlsequencereset
-#import ipdb; ipdb.set_trace()
+import ipdb; ipdb.set_trace()
 import re
 import os
 from os import listdir
 from os.path import isfile, join
 import psycopg2
 import mysql.connector
-TEST=False
+TEST=True
 OLD_WEBSITE_IMAGE_UPLOADS = '/home/rich/Projects/dan_website_rewrite/thecinemasource/media'
 
 DATABASES = {
@@ -74,6 +74,8 @@ for row in mysql_db_result:
 #        image_files = [ i for i in media_files if name in i.lower() and film in i.lower()]
         file_prefix = name + '-' + film
         image_files = [ i for i in media_files if file_prefix in i.lower()]
+        pattern = "(\w+)-(\w+)-(\d+)\.jpg"
+        image_files = [f for f in image_files if re.match(pattern,f)]
         row['post_date'] = row['post_date'].date() 
         psql_db_cursor.execute("INSERT INTO interviews_post (deprecated_id, author, date, content, title, category, excerpt) "
                                "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id",(
